@@ -19,10 +19,18 @@ def wild_search(product, sorter=0):
     return f'https://www.wildberries.ru/catalog/0/search.aspx?page=1&sort={wild_sort_list[sorter]}&search={quote(product)}'
 
 
+def test(product, sorter=0):
+    print(ozon_search(product, sorter))
+    print(sber_search(product, sorter))
+    print(wild_search(product, sorter))
+
+
 def soup_creation(url):
     html = urlopen(url).read().decode('utf-8')  # Получение html по url
     soup = BeautifulSoup(html, 'html.parser')  # Создание соупа из html
     return soup
 
 
-print(soup_creation(ozon_search('губка')))
+if __name__ == "__main__":
+    #print(soup_creation(ozon_search('губка')))
+    test("xiaomi", 1)
