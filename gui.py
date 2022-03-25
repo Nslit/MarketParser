@@ -3,6 +3,7 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
+from kivy.uix.togglebutton import ToggleButton
 
 from kivy.uix.boxlayout import BoxLayout
 
@@ -25,7 +26,18 @@ class TestApp(App):
         search = Button(text='search')
         search.bind(on_press=startSearching)
 
-        filtersLayout = BoxLayout(orientation='horizontal')
+        filtersLayout = BoxLayout(orientation='vertical')
+        scoreToggle = ToggleButton(text='score', group='filters', state='down')
+        newToggle = ToggleButton(text='new', group='filters')
+        priceToggle = ToggleButton(text='price', group='filters')
+        ratingToggle = ToggleButton(text='rating', group='filters')
+        discountToggle = ToggleButton(text='discount', group='filters')
+        filtersLayout.add_widget(scoreToggle)
+        filtersLayout.add_widget(newToggle)
+        filtersLayout.add_widget(priceToggle)
+        filtersLayout.add_widget(ratingToggle)
+        filtersLayout.add_widget(discountToggle)
+        '''
         filtersCheckBoxLayout = BoxLayout(orientation='vertical')
         filtersCheckBoxNamesLayout = BoxLayout(orientation='vertical')
         scoreCheckBox = CheckBox()
@@ -50,6 +62,7 @@ class TestApp(App):
         filtersCheckBoxNamesLayout.add_widget(ratingCheckBoxName)
         filtersCheckBoxNamesLayout.add_widget(discountCheckBoxName)
         filtersLayout.add_widget(filtersCheckBoxNamesLayout)
+        '''
 
         shopsLayout = BoxLayout(orientation='horizontal')
         shopsCheckBoxLayout = BoxLayout(orientation='vertical')
@@ -60,14 +73,14 @@ class TestApp(App):
         shopsCheckBoxLayout.add_widget(ozonCheckBox)
         shopsCheckBoxLayout.add_widget(sberCheckBox)
         shopsCheckBoxLayout.add_widget(wildberriesCheckBox)
-        filtersLayout.add_widget(shopsCheckBoxLayout)
+        shopsLayout.add_widget(shopsCheckBoxLayout)
         ozonCheckBoxName = Label(text='ozon')
         sberCheckBoxName = Label(text='sber')
         wildberriesCheckBoxName = Label(text='wildberries')
         shopsCheckBoxNamesLayout.add_widget(ozonCheckBoxName)
         shopsCheckBoxNamesLayout.add_widget(sberCheckBoxName)
         shopsCheckBoxNamesLayout.add_widget(wildberriesCheckBoxName)
-        filtersLayout.add_widget(shopsCheckBoxNamesLayout)
+        shopsLayout.add_widget(shopsCheckBoxNamesLayout)
 
         menuLayout.add_widget(search)
         menuLayout.add_widget(filtersLayout)
