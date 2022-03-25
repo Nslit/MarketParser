@@ -1,3 +1,5 @@
+FILTER_VALUE = 0
+
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -8,16 +10,40 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.boxlayout import BoxLayout
 
 
-
 def startSearching(instance):
     print(f"{instance.text}")
+
+
+def onSoreToggle(instance):
+    FILTER_VALUE = 0
+    print(FILTER_VALUE)
+
+
+def onNewToggle(instance):
+    FILTER_VALUE = 1
+    print(FILTER_VALUE)
+
+
+def onPriceToggle(instance):
+    FILTER_VALUE = 2
+    print(FILTER_VALUE)
+
+
+def onRatingToggle(instance):
+    FILTER_VALUE = 3
+    print(FILTER_VALUE)
+
+
+def onDiscountToggle(instance):
+    FILTER_VALUE = 4
+    print(FILTER_VALUE)
+
 
 class TestApp(App):
 
     def build(self):
-
         mainLayout = BoxLayout(orientation='vertical')
-        headLayout = BoxLayout(orientation='vertical', size_hint=(1, 0.4), padding=(0,0,0,5))
+        headLayout = BoxLayout(orientation='vertical', size_hint=(1, 0.4), padding=(0, 0, 0, 5))
         bottomLayout = BoxLayout(orientation='vertical')
         menuLayout = BoxLayout(orientation='horizontal')
 
@@ -27,11 +53,16 @@ class TestApp(App):
         search.bind(on_press=startSearching)
 
         filtersLayout = BoxLayout(orientation='vertical')
-        scoreToggle = ToggleButton(text='score', group='filters', state='down')
+        scoreToggle = ToggleButton(text='score', group='filters')
+        scoreToggle.bind(on_press=onSoreToggle)
         newToggle = ToggleButton(text='new', group='filters')
+        newToggle.bind(on_press=onNewToggle)
         priceToggle = ToggleButton(text='price', group='filters')
+        priceToggle.bind(on_press=onPriceToggle)
         ratingToggle = ToggleButton(text='rating', group='filters')
+        ratingToggle.bind(on_press=onRatingToggle)
         discountToggle = ToggleButton(text='discount', group='filters')
+        discountToggle.bind(on_press=onDiscountToggle)
         filtersLayout.add_widget(scoreToggle)
         filtersLayout.add_widget(newToggle)
         filtersLayout.add_widget(priceToggle)
@@ -95,8 +126,6 @@ class TestApp(App):
         bottomLayout.add_widget(goods1)
         bottomLayout.add_widget(goods2)
         bottomLayout.add_widget(goods3)
-
-
 
         mainLayout.add_widget(headLayout)
         mainLayout.add_widget(bottomLayout)

@@ -32,5 +32,5 @@ def soup_creation(url):
 
 
 if __name__ == "__main__":
-    #print(soup_creation(ozon_search('губка')))
+    # print(soup_creation(ozon_search('губка')))
     test("xiaomi", 1)
