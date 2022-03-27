@@ -1,5 +1,4 @@
-FILTER_VALUE = 0
-
+from gui_functions import *
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -10,35 +9,6 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.boxlayout import BoxLayout
 
 
-def startSearching(instance):
-    print(f"{instance.text}")
-
-
-def onSoreToggle(instance):
-    FILTER_VALUE = 0
-    print(FILTER_VALUE)
-
-
-def onNewToggle(instance):
-    FILTER_VALUE = 1
-    print(FILTER_VALUE)
-
-
-def onPriceToggle(instance):
-    FILTER_VALUE = 2
-    print(FILTER_VALUE)
-
-
-def onRatingToggle(instance):
-    FILTER_VALUE = 3
-    print(FILTER_VALUE)
-
-
-def onDiscountToggle(instance):
-    FILTER_VALUE = 4
-    print(FILTER_VALUE)
-
-
 class TestApp(App):
 
     def build(self):
@@ -47,8 +17,8 @@ class TestApp(App):
         bottomLayout = BoxLayout(orientation='vertical')
         menuLayout = BoxLayout(orientation='horizontal')
 
-        textinput = TextInput(text='Enter a request')
-
+        textInput = TextInput(text='Enter a request', multiline=False)
+        textInput.bind(text=on_text)
         search = Button(text='search')
         search.bind(on_press=startSearching)
 
@@ -68,39 +38,16 @@ class TestApp(App):
         filtersLayout.add_widget(priceToggle)
         filtersLayout.add_widget(ratingToggle)
         filtersLayout.add_widget(discountToggle)
-        '''
-        filtersCheckBoxLayout = BoxLayout(orientation='vertical')
-        filtersCheckBoxNamesLayout = BoxLayout(orientation='vertical')
-        scoreCheckBox = CheckBox()
-        newCheckBox = CheckBox()
-        priceCheckBox = CheckBox()
-        ratingCheckBox = CheckBox()
-        discountCheckBox = CheckBox()
-        filtersCheckBoxLayout.add_widget(scoreCheckBox)
-        filtersCheckBoxLayout.add_widget(newCheckBox)
-        filtersCheckBoxLayout.add_widget(priceCheckBox)
-        filtersCheckBoxLayout.add_widget(ratingCheckBox)
-        filtersCheckBoxLayout.add_widget(discountCheckBox)
-        filtersLayout.add_widget(filtersCheckBoxLayout)
-        scoreCheckBoxName = Label(text='score')
-        newCheckBoxName = Label(text='new')
-        priceCheckBoxName = Label(text='price')
-        ratingCheckBoxName = Label(text='rating')
-        discountCheckBoxName = Label(text='discount')
-        filtersCheckBoxNamesLayout.add_widget(scoreCheckBoxName)
-        filtersCheckBoxNamesLayout.add_widget(newCheckBoxName)
-        filtersCheckBoxNamesLayout.add_widget(priceCheckBoxName)
-        filtersCheckBoxNamesLayout.add_widget(ratingCheckBoxName)
-        filtersCheckBoxNamesLayout.add_widget(discountCheckBoxName)
-        filtersLayout.add_widget(filtersCheckBoxNamesLayout)
-        '''
 
         shopsLayout = BoxLayout(orientation='horizontal')
         shopsCheckBoxLayout = BoxLayout(orientation='vertical')
         shopsCheckBoxNamesLayout = BoxLayout(orientation='vertical')
         ozonCheckBox = CheckBox()
+        ozonCheckBox.bind(active=onOzonActive)
         sberCheckBox = CheckBox()
+        sberCheckBox.bind(active=onSberActive)
         wildberriesCheckBox = CheckBox()
+        wildberriesCheckBox.bind(active=onWildberriesActive)
         shopsCheckBoxLayout.add_widget(ozonCheckBox)
         shopsCheckBoxLayout.add_widget(sberCheckBox)
         shopsCheckBoxLayout.add_widget(wildberriesCheckBox)
@@ -117,7 +64,7 @@ class TestApp(App):
         menuLayout.add_widget(filtersLayout)
         menuLayout.add_widget(shopsLayout)
 
-        headLayout.add_widget(textinput)
+        headLayout.add_widget(textInput)
         headLayout.add_widget(menuLayout)
 
         goods1 = Button(text='goods1')
