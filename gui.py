@@ -18,7 +18,7 @@ class TestApp(App):
         menuLayout = BoxLayout(orientation='horizontal')
 
         textInput = TextInput(text='Enter a request', multiline=False)
-        textInput.bind(text=on_text)
+        textInput.bind(text=onSearch)
         search = Button(text='search')
         search.bind(on_press=startSearching)
 

@@ -2,6 +2,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from urllib.parse import quote
 
+
 ozon_sort_list = ('score', 'new', 'price', 'rating', 'discount')
 sber_sort_list = (0, 4, 1, 3, 6)
 wild_sort_list = ('popular', 'newly', 'priceup', 'rate', 'sale')
