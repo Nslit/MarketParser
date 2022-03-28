@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from urllib.parse import quote
+from ozon import OzonGoods
 
 ozon_sort_list = ("score", "new", "price", "rating", "discount")
 sber_sort_list = (0, 4, 1, 3, 6)
@@ -19,10 +20,9 @@ def wild_search(product, sorter=0):
     return f"https://www.wildberries.ru/catalog/0/search.aspx?page=1&sort={wild_sort_list[sorter]}&search={quote(product)}"
 
 
-def test(product, sorter=0):
-    print(ozon_search(product, sorter))
-    print(sber_search(product, sorter))
-    print(wild_search(product, sorter))
+def get_goods_from_ozon(soup):
+    quotes = soup.find_all("div", class_="l4i li5")
+    return quotes
 
 
 def soup_creation(url):
@@ -33,26 +33,11 @@ def soup_creation(url):
 
 if __name__ == "__main__":
     product = "xiaomi"
-    link = ozon_search(product)
-    soup = soup_creation(link)
-
-    quotes = soup.find_all("div", class_="l4i li5")  # получение карточек всех товаров со страницы
-    for i in quotes:
-        link = "https://www.ozon.ru" + str(i.find("a", class_="tile-hover-target ji9").get("href"))
-        title = str(i.find("a", class_="tile-hover-target ji9").text)
-        price = i.find("span", class_="ui-n9 ui-o1 ui-o4")
-        if price:
-            price = price.text  # цена со скидкой
-        else:
-            price = i.find("span", class_="ui-n9 ui-o1").text  # цена без скидки
-        img = i.find("img", class_="ui-i8").get("src")
-        score = str(i.find("div", class_="ui-b2a").get("style"))[6: -2]
-        if not score:
-            score = 0
-        score = round(float(score), 2)
-        print(title)
-        print(link)
-        print(price)
-        print(img)
-        print(score)
-        print()
+    print(f"Парсинг Озона по запросу{product}")
+    print(ozon_search(product))
+    soup = soup_creation(ozon_search("xiaomi"))
+    for goods in get_goods_from_ozon(soup):
+        OzonGoods(goods).run()
+    print()
+    print(sber_search(product))
+    print(wild_search(product))
