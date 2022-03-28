@@ -9,7 +9,7 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.boxlayout import BoxLayout
 
 
-class TestApp(App):
+class MarketParser(App):
 
     def build(self):
         mainLayout = BoxLayout(orientation='vertical')
@@ -80,4 +80,4 @@ class TestApp(App):
 
 
 if __name__ == '__main__':
-    TestApp().run()
+    MarketParser().run()

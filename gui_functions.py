@@ -82,9 +82,5 @@ def onWildberriesActive(checkbox, value):
         print('The checkbox Wildberries is inactive')
 
 
-def _test():
-    pass
-
-
 if __name__ == '__main__':
-    _test()
+    pass
