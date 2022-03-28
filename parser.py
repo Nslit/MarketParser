@@ -25,6 +25,11 @@ def get_goods_from_ozon(soup):
     return quotes
 
 
+def get_goods_from_wildberries(soup):
+    quotes = soup.find_all(class_="price")
+    return quotes
+
+
 def soup_creation(url):
     html = urlopen(url).read().decode("utf-8")  # Получение html по url
     soup = BeautifulSoup(html, "html.parser")  # Создание соупа из html
@@ -33,11 +38,15 @@ def soup_creation(url):
 
 if __name__ == "__main__":
     product = "xiaomi"
+    """
     print(f"Парсинг Озона по запросу{product}")
     print(ozon_search(product))
     soup = soup_creation(ozon_search("xiaomi"))
     for goods in get_goods_from_ozon(soup):
-        OzonGoods(goods).run()
+       OzonGoods(goods).run()
     print()
+    """
     print(sber_search(product))
     print(wild_search(product))
+    soup = soup_creation(wild_search("xiaomi"))
+    print(get_goods_from_wildberries(soup))
