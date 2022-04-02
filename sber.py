@@ -1,6 +1,4 @@
-# переделать через selenium
-
-class WildberriesGoods:
+class SberGoods:
 
     def __init__(self, goods):
         self.name = goods
@@ -66,8 +64,8 @@ class WildberriesGoods:
 
 
 if __name__ == "__main__":
-    from parser import wild_search, soup_creation, get_goods_from_wildberries
+    from parser import sber_search, soup_creation, get_goods_from_sber
 
-    soup = soup_creation(wild_search("xiaomi"))
-    for goods in get_goods_from_wildberries(soup):
-        WildberriesGoods(goods).run()
+    soup = soup_creation(sber_search("xiaomi"))
+    for goods in get_goods_from_sber(soup):
+        SberGoods(goods).run()

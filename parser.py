@@ -29,6 +29,10 @@ def get_goods_from_wildberries(soup):
     quotes = soup.find_all(class_="price")
     return quotes
 
+def get_goods_from_sber(soup):
+    quotes = soup.find_all("div", class_="catalog-item")
+    return quotes
+
 
 def soup_creation(url):
     html = urlopen(url).read().decode("utf-8")  # Получение html по url
@@ -48,5 +52,6 @@ if __name__ == "__main__":
     """
     print(sber_search(product))
     print(wild_search(product))
-    soup = soup_creation(wild_search("xiaomi"))
-    print(get_goods_from_wildberries(soup))
+    soup = soup_creation(sber_search("xiaomi"))
+    print(soup)
+    print(get_goods_from_sber(soup))
