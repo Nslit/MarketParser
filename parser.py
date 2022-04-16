@@ -21,7 +21,7 @@ def wild_search(product, sorter=0):
 
 
 def get_goods_from_ozon(soup):
-    quotes = soup.find_all("div", class_="l4i li5")
+    quotes = soup.find_all("div", class_="in6 n6i")
     return quotes
 
 
@@ -35,23 +35,28 @@ def get_goods_from_sber(soup):
 
 
 def soup_creation(url):
-    html = urlopen(url).read().decode("utf-8")  # Получение html по url
-    soup = BeautifulSoup(html, "html.parser")  # Создание соупа из html
+    html = urlopen(url).read().decode("utf-8")
+    soup = BeautifulSoup(html, "html.parser")
     return soup
 
 
 if __name__ == "__main__":
     product = "xiaomi"
-    """
-    print(f"Парсинг Озона по запросу{product}")
+    print(f"Парсинг Озона по запросу {product}")
     print(ozon_search(product))
     soup = soup_creation(ozon_search("xiaomi"))
+    soup = soup.find("body")
+    counter = 0
+    with open('text.txt', "w") as file:
+        file.write(str(soup))
+
+    """
     for goods in get_goods_from_ozon(soup):
        OzonGoods(goods).run()
     print()
-    """
     print(sber_search(product))
     print(wild_search(product))
     soup = soup_creation(sber_search("xiaomi"))
     print(soup)
     print(get_goods_from_sber(soup))
+    """
