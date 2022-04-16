@@ -10,6 +10,9 @@ def labirint_search(product, sorter="relevance"):
 def book24_search(product, sorter="sort"):
     return f"https://book24.ru/search/?q={quote(product)}&by=desc&sort={sorter}"
 
+def bookvoed_search(product, sorter="relevancy"):
+    return f"https://www.bookvoed.ru/books?q={quote(product)}&order={sorter}&desc=1&ishop=true"
+
 
 def soup_creation(url):
     html = urlopen(url).read().decode("utf-8")
