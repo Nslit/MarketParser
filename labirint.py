@@ -2,16 +2,21 @@ from parser_books import Shop
 
 
 class Labirint(Shop):
-    def parse_title_link(self):
+    def parser_title(self):
         try:
             title = self.card.find("a", class_="product-title-link").text
-            link = self.card.find("a", class_="product-title-link").get("href")
             self.title = str(title).replace("\n", "")
-            self.link = "https://www.labirint.ru" + str(link).replace("\n", "")
         except Exception:
             self.title = None
+            print("Error in parser_title")
+
+    def parser_link(self):
+        try:
+            link = self.card.find("a", class_="product-title-link").get("href")
+            self.link = "https://www.labirint.ru" + str(link).replace("\n", "")
+        except Exception:
             self.link = None
-            print("Error in parse_title_link")
+            print("Error in parser_link")
 
     def parser_price(self):
         try:
@@ -29,12 +34,6 @@ class Labirint(Shop):
             self.author = None
             print("Error in parser_author")
 
-    def pars(self):
-        self.parse_title_link()
-        self.parser_price()
-        self.parser_author()
-
-        self.parser_test()
 
 
 if __name__ == "__main__":

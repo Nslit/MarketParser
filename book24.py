@@ -5,15 +5,36 @@ class Book24(Shop):
 
     def parser_title(self):
         try:
-            title = self.card.find("a", class_="product-card__name smartLink").text
+            title = self.card.find("a", class_="product-card__name smartLink").get("title")
             self.title = str(title)
         except Exception:
             self.title = None
             print("Error in parse_title")
 
-    def run(self):
-        self.parser_title()
-        print(self.title, self.link, self.price)
+    def parser_link(self):
+        try:
+            link = self.card.find("a", class_="product-card__name smartLink").get("href")
+            self.link = "https://book24.ru" + str(link)
+        except Exception:
+            self.link = None
+            print("Error in parser_link")
+
+    def parser_price(self):
+        try:
+            price = self.card.find("div", class_="product-card-price__current").get("span")
+            self.price = str(price)
+        except Exception:
+            self.price = None
+            print("Error in parser_price")
+
+    def parser_author(self):
+        try:
+            author = ""
+            self.author = str(author)
+        except Exception:
+            self.author = None
+            print("Error in parser_author")
+
 
 
 if __name__ == "__main__":
@@ -25,7 +46,7 @@ if __name__ == "__main__":
         class_name = "product-list__item"
         cards = product_cards(soup, class_name)
         for card in cards:
-            Book24(card).run()
+            Book24(card).pars()
 
 
     test("Ремарк")

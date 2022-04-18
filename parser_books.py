@@ -45,7 +45,15 @@ class Shop:
     def parser_test(self):
         print("#" * 30)
         print(self.title)
-        print(self.link)
-        print(self.price)
         print(self.author)
+        print(self.price)
+        print(self.link)
         print()
+
+    def pars(self):
+        self.parser_title()
+        self.parser_link()
+        self.parser_price()
+        self.parser_author()
+
+        self.parser_test()
