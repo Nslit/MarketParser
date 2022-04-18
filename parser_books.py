@@ -10,6 +10,7 @@ def labirint_search(product, sorter="relevance"):
 def book24_search(product, sorter="sort"):
     return f"https://book24.ru/search/?q={quote(product)}&by=desc&sort={sorter}"
 
+
 def bookvoed_search(product, sorter="relevancy"):
     return f"https://www.bookvoed.ru/books?q={quote(product)}&order={sorter}&desc=1&ishop=true"
 
@@ -18,6 +19,7 @@ def soup_creation(url):
     html = urlopen(url).read().decode("utf-8")
     soup = BeautifulSoup(html, "html.parser")
     return soup
+
 
 def soup_creation_agent(url):
     req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -39,3 +41,11 @@ class Shop:
         self.link = None
         self.price = None
         self.img = None
+
+    def parser_test(self):
+        print("#" * 30)
+        print(self.title)
+        print(self.link)
+        print(self.price)
+        print(self.author)
+        print()
