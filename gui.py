@@ -5,11 +5,23 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
 from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.gridlayout import GridLayout
 
 from kivy.uix.boxlayout import BoxLayout
 
 
 class MarketParser(App):
+
+    def book_list(self):
+        layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
+        layout.bind(minimum_height=layout.setter('height'))
+        for i in range(100):
+            btn = Button(text=str(i), size_hint_y=None, height=50)
+            layout.add_widget(btn)
+        bottomLayout = ScrollView(size_hint=(1, None), size=(0, 450))
+        bottomLayout.add_widget(layout)
+        return bottomLayout
 
     def build(self):
         mainLayout = BoxLayout(orientation='vertical')
@@ -42,22 +54,22 @@ class MarketParser(App):
         shopsLayout = BoxLayout(orientation='horizontal')
         shopsCheckBoxLayout = BoxLayout(orientation='vertical')
         shopsCheckBoxNamesLayout = BoxLayout(orientation='vertical')
-        ozonCheckBox = CheckBox()
-        ozonCheckBox.bind(active=onOzonActive)
-        sberCheckBox = CheckBox()
-        sberCheckBox.bind(active=onSberActive)
-        wildberriesCheckBox = CheckBox()
-        wildberriesCheckBox.bind(active=onWildberriesActive)
-        shopsCheckBoxLayout.add_widget(ozonCheckBox)
-        shopsCheckBoxLayout.add_widget(sberCheckBox)
-        shopsCheckBoxLayout.add_widget(wildberriesCheckBox)
+        labirintCheckBox = CheckBox()
+        labirintCheckBox.bind(active=onLabirintActive)
+        book24CheckBox = CheckBox()
+        book24CheckBox.bind(active=onBook24Active)
+        # wildberriesCheckBox = CheckBox()
+        # wildberriesCheckBox.bind(active=onWildberriesActive)
+        shopsCheckBoxLayout.add_widget(labirintCheckBox)
+        shopsCheckBoxLayout.add_widget(book24CheckBox)
+        # shopsCheckBoxLayout.add_widget(wildberriesCheckBox)
         shopsLayout.add_widget(shopsCheckBoxLayout)
-        ozonCheckBoxName = Label(text='ozon')
-        sberCheckBoxName = Label(text='sber')
-        wildberriesCheckBoxName = Label(text='wildberries')
-        shopsCheckBoxNamesLayout.add_widget(ozonCheckBoxName)
-        shopsCheckBoxNamesLayout.add_widget(sberCheckBoxName)
-        shopsCheckBoxNamesLayout.add_widget(wildberriesCheckBoxName)
+        labirintCheckBoxName = Label(text='labirint')
+        book24CheckBoxName = Label(text='sber')
+        # wildberriesCheckBoxName = Label(text='wildberries')
+        shopsCheckBoxNamesLayout.add_widget(labirintCheckBoxName)
+        shopsCheckBoxNamesLayout.add_widget(book24CheckBoxName)
+        # shopsCheckBoxNamesLayout.add_widget(wildberriesCheckBoxName)
         shopsLayout.add_widget(shopsCheckBoxNamesLayout)
 
         menuLayout.add_widget(search)
@@ -67,15 +79,10 @@ class MarketParser(App):
         headLayout.add_widget(textInput)
         headLayout.add_widget(menuLayout)
 
-        goods1 = Button(text='goods1')
-        goods2 = Button(text='goods2')
-        goods3 = Button(text='goods3')
-        bottomLayout.add_widget(goods1)
-        bottomLayout.add_widget(goods2)
-        bottomLayout.add_widget(goods3)
-
         mainLayout.add_widget(headLayout)
-        mainLayout.add_widget(bottomLayout)
+        # mainLayout.add_widget(bottomLayout)
+        mainLayout.add_widget(self.book_list())
+
         return mainLayout
 
 

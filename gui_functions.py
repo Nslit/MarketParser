@@ -52,24 +52,24 @@ def onDiscountToggle(instance):
     print(FILTER_VALUE)
 
 
-def onOzonActive(checkbox, value):
+def onLabirintActive(checkbox, value):
     global MARKETS
     if value:
-        MARKETS.add("ozon")
-        print('The checkbox Ozon is active')
+        MARKETS.add("labirint")
+        print('The checkbox labirint is active')
     else:
-        MARKETS.discard("ozon")
-        print('The checkbox Ozon is inactive')
+        MARKETS.discard("labirint")
+        print('The checkbox labirint is inactive')
 
 
-def onSberActive(checkbox, value):
+def onBook24Active(checkbox, value):
     global MARKETS
     if value:
-        MARKETS.add("sber")
-        print('The checkbox Sber is active')
+        MARKETS.add("Book24")
+        print('The checkbox Book24 is active')
     else:
-        MARKETS.discard("sber")
-        print('The checkbox Sber is inactive')
+        MARKETS.discard("Book24")
+        print('The checkbox Book24 is inactive')
 
 
 def onWildberriesActive(checkbox, value):
