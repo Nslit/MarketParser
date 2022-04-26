@@ -42,7 +42,7 @@ def parser_book24(product):
     class_name = "product-list__item"
     cards = product_cards(soup, class_name)
     for card in cards:
-        Book24(card).pars()
+        return Book24(card).pars()
 
 
 if __name__ == "__main__":

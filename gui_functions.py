@@ -1,5 +1,7 @@
 from constants import *
 from parser_books import labirint_search, book24_search, bookvoed_search
+from labirint import  parser_labirint
+from book24 import parser_book24
 
 
 def onSearch(instance, value):
@@ -80,6 +82,14 @@ def onWildberriesActive(checkbox, value):
     else:
         MARKETS.discard("bookvoed")
         print('The checkbox bookvoed is inactive')
+
+def all_parse(query):
+    products1 = parser_labirint(query)
+    products2 = parser_book24(query)
+
+
+
+
 
 
 if __name__ == '__main__':

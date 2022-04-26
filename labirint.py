@@ -41,7 +41,7 @@ def parser_labirint(product):
     class_name = "card-column card-column_gutter col-xs-6 col-sm-3 col-md-1-5 col-xl-2"
     cards = product_cards(soup, class_name)
     for card in cards:
-        Labirint(card).pars()
+        return Labirint(card).pars()
 
 
 if __name__ == "__main__":

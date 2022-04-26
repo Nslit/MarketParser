@@ -57,7 +57,7 @@ class Shop:
         self.parser_price()
         self.parser_author()
 
-        self.parser_test()
+        #self.parser_test()
 
         return {
             "shop": "Labirint",
