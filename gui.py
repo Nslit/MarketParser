@@ -58,18 +58,18 @@ class MarketParser(App):
         labirintCheckBox.bind(active=onLabirintActive)
         book24CheckBox = CheckBox()
         book24CheckBox.bind(active=onBook24Active)
-        # wildberriesCheckBox = CheckBox()
-        # wildberriesCheckBox.bind(active=onWildberriesActive)
+        # bookvoedCheckBox = CheckBox()
+        # bookvoedCheckBox.bind(active=onBookvoedActive)
         shopsCheckBoxLayout.add_widget(labirintCheckBox)
         shopsCheckBoxLayout.add_widget(book24CheckBox)
-        # shopsCheckBoxLayout.add_widget(wildberriesCheckBox)
+        # shopsCheckBoxLayout.add_widget(bookvoedCheckBox)
         shopsLayout.add_widget(shopsCheckBoxLayout)
         labirintCheckBoxName = Label(text='labirint')
         book24CheckBoxName = Label(text='sber')
-        # wildberriesCheckBoxName = Label(text='wildberries')
+        # bookvoedCheckBoxName = Label(text='bookvoed')
         shopsCheckBoxNamesLayout.add_widget(labirintCheckBoxName)
         shopsCheckBoxNamesLayout.add_widget(book24CheckBoxName)
-        # shopsCheckBoxNamesLayout.add_widget(wildberriesCheckBoxName)
+        # shopsCheckBoxNamesLayout.add_widget(bookvoedCheckBoxName)
         shopsLayout.add_widget(shopsCheckBoxNamesLayout)
 
         menuLayout.add_widget(search)
@@ -80,7 +80,6 @@ class MarketParser(App):
         headLayout.add_widget(menuLayout)
 
         mainLayout.add_widget(headLayout)
-        # mainLayout.add_widget(bottomLayout)
         mainLayout.add_widget(self.book_list())
 
         return mainLayout

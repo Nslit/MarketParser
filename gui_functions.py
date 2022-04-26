@@ -1,5 +1,5 @@
 from constants import *
-from parser import ozon_search, sber_search, wild_search
+from parser_books import labirint_search, book24_search, bookvoed_search
 
 
 def onSearch(instance, value):
@@ -14,12 +14,12 @@ def startSearching(instance):
     global FILTER_VALUE
     print(MARKETS)
     print(SEARCH_QUERY)
-    if "ozon" in MARKETS:
-        print(ozon_search(SEARCH_QUERY, FILTER_VALUE))
-    if "sber" in MARKETS:
-        print(sber_search(SEARCH_QUERY, FILTER_VALUE))
-    if "wieldberries" in MARKETS:
-        print(wild_search(SEARCH_QUERY, FILTER_VALUE))
+    if "labirint" in MARKETS:
+        print(labirint_search(SEARCH_QUERY, FILTER_VALUE))
+    if "book24" in MARKETS:
+        print(book24_search(SEARCH_QUERY, FILTER_VALUE))
+    if "bookvoed" in MARKETS:
+        print(bookvoed_search(SEARCH_QUERY, FILTER_VALUE))
 
 
 def onSoreToggle(instance):
@@ -65,21 +65,21 @@ def onLabirintActive(checkbox, value):
 def onBook24Active(checkbox, value):
     global MARKETS
     if value:
-        MARKETS.add("Book24")
+        MARKETS.add("book24")
         print('The checkbox Book24 is active')
     else:
-        MARKETS.discard("Book24")
+        MARKETS.discard("book24")
         print('The checkbox Book24 is inactive')
 
 
 def onWildberriesActive(checkbox, value):
     global MARKETS
     if value:
-        MARKETS.add("wieldberries")
-        print('The checkbox Wildberries is active')
+        MARKETS.add("bookvoed")
+        print('The checkbox bookvoed is active')
     else:
-        MARKETS.discard("wieldberries")
-        print('The checkbox Wildberries is inactive')
+        MARKETS.discard("bookvoed")
+        print('The checkbox bookvoed is inactive')
 
 
 if __name__ == '__main__':
