@@ -35,18 +35,16 @@ class Labirint(Shop):
             print("Error in parser_author")
 
 
+def parser_labirint(product):
+    url = labirint_search(product)
+    soup = soup_creation(url)
+    class_name = "card-column card-column_gutter col-xs-6 col-sm-3 col-md-1-5 col-xl-2"
+    cards = product_cards(soup, class_name)
+    for card in cards:
+        Labirint(card).pars()
+
 
 if __name__ == "__main__":
     from parser_books import labirint_search, soup_creation, product_cards
 
-
-    def test(product):
-        url = labirint_search(product)
-        soup = soup_creation(url)
-        class_name = "card-column card-column_gutter col-xs-6 col-sm-3 col-md-1-5 col-xl-2"
-        cards = product_cards(soup, class_name)
-        for card in cards:
-            Labirint(card).pars()
-
-
-    test("Ремарк")
+    parser_labirint("Ремарк")
