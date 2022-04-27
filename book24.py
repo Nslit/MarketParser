@@ -1,5 +1,5 @@
 from parser_books import Shop
-
+from parser_books import book24_search, soup_creation_agent, product_cards
 
 class Book24(Shop):
 
@@ -25,7 +25,7 @@ class Book24(Shop):
             self.price = str(price)
         except Exception:
             self.price = None
-            print("Error in parser_price")
+            #print("Error in parser_price")
 
     def parser_author(self):
         try:
@@ -37,15 +37,16 @@ class Book24(Shop):
 
 
 def parser_book24(product):
+    books = []
     url = book24_search(product)
     soup = soup_creation_agent(url)
     class_name = "product-list__item"
     cards = product_cards(soup, class_name)
     for card in cards:
-        return Book24(card).pars()
+        books.append(Book24(card).pars())
+    #print(books)
+    return books
 
 
 if __name__ == "__main__":
-    from parser_books import book24_search, soup_creation_agent, product_cards
-
     parser_book24("Ремарк")

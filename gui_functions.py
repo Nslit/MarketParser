@@ -1,6 +1,6 @@
 from constants import *
 from parser_books import labirint_search, book24_search, bookvoed_search
-from labirint import  parser_labirint
+from labirint import parser_labirint
 from book24 import parser_book24
 
 
@@ -10,18 +10,23 @@ def onSearch(instance, value):
     print(value)
 
 
+
 def startSearching(instance):
     global SEARCH_QUERY
     global MARKETS
     global FILTER_VALUE
+    global ALL_BOOKS
     print(MARKETS)
     print(SEARCH_QUERY)
     if "labirint" in MARKETS:
         print(labirint_search(SEARCH_QUERY, FILTER_VALUE))
+        ALL_BOOKS += parser_labirint(SEARCH_QUERY)
     if "book24" in MARKETS:
         print(book24_search(SEARCH_QUERY, FILTER_VALUE))
+        ALL_BOOKS += parser_book24(SEARCH_QUERY)
     if "bookvoed" in MARKETS:
         print(bookvoed_search(SEARCH_QUERY, FILTER_VALUE))
+    print(*ALL_BOOKS, sep="\n")
 
 
 def onSoreToggle(instance):
@@ -74,7 +79,7 @@ def onBook24Active(checkbox, value):
         print('The checkbox Book24 is inactive')
 
 
-def onWildberriesActive(checkbox, value):
+def onBookvoedActive(checkbox, value):
     global MARKETS
     if value:
         MARKETS.add("bookvoed")
@@ -82,14 +87,6 @@ def onWildberriesActive(checkbox, value):
     else:
         MARKETS.discard("bookvoed")
         print('The checkbox bookvoed is inactive')
-
-def all_parse(query):
-    products1 = parser_labirint(query)
-    products2 = parser_book24(query)
-
-
-
-
 
 
 if __name__ == '__main__':

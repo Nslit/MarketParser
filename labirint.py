@@ -1,4 +1,5 @@
 from parser_books import Shop
+from parser_books import labirint_search, soup_creation, product_cards
 
 
 class Labirint(Shop):
@@ -36,15 +37,16 @@ class Labirint(Shop):
 
 
 def parser_labirint(product):
+    books = []
     url = labirint_search(product)
     soup = soup_creation(url)
     class_name = "card-column card-column_gutter col-xs-6 col-sm-3 col-md-1-5 col-xl-2"
     cards = product_cards(soup, class_name)
     for card in cards:
-        return Labirint(card).pars()
+        books.append(Labirint(card).pars())
+    #print(books)
+    return books
 
 
 if __name__ == "__main__":
-    from parser_books import labirint_search, soup_creation, product_cards
-
     parser_labirint("Ремарк")

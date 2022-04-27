@@ -25,11 +25,10 @@ class MarketParser(App):
 
     def build(self):
         mainLayout = BoxLayout(orientation='vertical')
-        headLayout = BoxLayout(orientation='vertical', size_hint=(1, 0.4), padding=(0, 0, 0, 5))
-        bottomLayout = BoxLayout(orientation='vertical')
+        headLayout = BoxLayout(orientation='vertical', size_hint=(1, 0.3), padding=(0, 0, 0, 5))
         menuLayout = BoxLayout(orientation='horizontal')
 
-        textInput = TextInput(text='Enter a request', multiline=False)
+        textInput = TextInput(text='', multiline=False, size_hint=(1, 0.4))
         textInput.bind(text=onSearch)
         search = Button(text='search')
         search.bind(on_press=startSearching)
@@ -65,7 +64,7 @@ class MarketParser(App):
         # shopsCheckBoxLayout.add_widget(bookvoedCheckBox)
         shopsLayout.add_widget(shopsCheckBoxLayout)
         labirintCheckBoxName = Label(text='labirint')
-        book24CheckBoxName = Label(text='sber')
+        book24CheckBoxName = Label(text='book24')
         # bookvoedCheckBoxName = Label(text='bookvoed')
         shopsCheckBoxNamesLayout.add_widget(labirintCheckBoxName)
         shopsCheckBoxNamesLayout.add_widget(book24CheckBoxName)

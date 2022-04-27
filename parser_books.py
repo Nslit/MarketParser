@@ -60,7 +60,7 @@ class Shop:
         #self.parser_test()
 
         return {
-            "shop": "Labirint",
+            "shop": str(type(self).__name__),
             "title": self.title,
             "author": self.author,
             "link": self.link,
