@@ -25,7 +25,7 @@ class Book24(Shop):
             self.price = str(price)
         except Exception:
             self.price = None
-            #print("Error in parser_price")
+            print("Error in parser_price")
 
     def parser_author(self):
         try:

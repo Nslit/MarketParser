@@ -15,7 +15,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 class MarketParser(App):
 
-    def startSearching(self, instance):
+    def start_searching(self, instance):
         print(self.MARKETS)
         print(self.SEARCH_QUERY)
         if "labirint" in self.MARKETS:
@@ -26,18 +26,23 @@ class MarketParser(App):
             self.ALL_BOOKS += parser_book24(self.SEARCH_QUERY)
         if "bookvoed" in self.MARKETS:
             print(bookvoed_search(self.SEARCH_QUERY, self.FILTER_VALUE))
+
         print(*self.ALL_BOOKS, sep="\n")
+
         self.mainLayout.clear_widgets()
         self.bottomLayout = self.book_list()
         self.mainLayout.add_widget(self.headLayout)
         self.mainLayout.add_widget(self.bottomLayout)
+        self.ALL_BOOKS = []
 
     def book_list(self):
         self.layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
         self.layout.bind(minimum_height=self.layout.setter('height'))
-        for i in self.ALL_BOOKS:
-            btn = Button(text=str(i), size_hint_y=None, height=50)
-            self.layout.add_widget(btn)
+        for book in self.ALL_BOOKS:
+            book_info = f' Магазин:{book["shop"]}\n Название:{book["title"]}\n Автор:{book["author"]}\n Цена:{book["price"]}'
+            self.bookText = Label(text=book_info, size_hint_y=None, height=150, halign="left", valign="middle")
+            self.bookText.bind(size=self.bookText.setter('text_size'))
+            self.layout.add_widget(self.bookText)
         self.bottomLayout = ScrollView(size_hint=(1, None), size=(0, 450))
         self.bottomLayout.add_widget(self.layout)
         return self.bottomLayout
@@ -50,24 +55,24 @@ class MarketParser(App):
 
         self.mainLayout = BoxLayout(orientation='vertical')
         self.headLayout = BoxLayout(orientation='vertical', size_hint=(1, 0.3), padding=(0, 0, 0, 5))
-        self.menuLayout = BoxLayout(orientation='horizontal')
+        self.menuLayout = BoxLayout(orientation='horizontal', spacing=10,)
 
         self.textInput = TextInput(text='', multiline=False, size_hint=(1, 0.4))
-        self.textInput.bind(text=self.onSearch)
+        self.textInput.bind(text=self.on_search)
         self.search = Button(text='search')
-        self.search.bind(on_press=self.startSearching)
+        self.search.bind(on_press=self.start_searching)
 
         self.filtersLayout = BoxLayout(orientation='vertical')
         self.scoreToggle = ToggleButton(text='score', group='filters')
-        self.scoreToggle.bind(on_press=self.onSoreToggle)
+        self.scoreToggle.bind(on_press=self.on_sore_toggle)
         self.newToggle = ToggleButton(text='new', group='filters')
-        self.newToggle.bind(on_press=self.onNewToggle)
+        self.newToggle.bind(on_press=self.on_new_toggle)
         self.priceToggle = ToggleButton(text='price', group='filters')
-        self.priceToggle.bind(on_press=self.onPriceToggle)
+        self.priceToggle.bind(on_press=self.on_price_toggle)
         self.ratingToggle = ToggleButton(text='rating', group='filters')
-        self.ratingToggle.bind(on_press=self.onRatingToggle)
+        self.ratingToggle.bind(on_press=self.on_rating_toggle)
         self.discountToggle = ToggleButton(text='discount', group='filters')
-        self.discountToggle.bind(on_press=self.onDiscountToggle)
+        self.discountToggle.bind(on_press=self.on_discount_toggle)
         self.filtersLayout.add_widget(self.scoreToggle)
         self.filtersLayout.add_widget(self.newToggle)
         self.filtersLayout.add_widget(self.priceToggle)
@@ -78,9 +83,9 @@ class MarketParser(App):
         self.shopsCheckBoxLayout = BoxLayout(orientation='vertical')
         self.shopsCheckBoxNamesLayout = BoxLayout(orientation='vertical')
         self.labirintCheckBox = CheckBox()
-        self.labirintCheckBox.bind(active=self.onLabirintActive)
+        self.labirintCheckBox.bind(active=self.on_labirint_active)
         self.book24CheckBox = CheckBox()
-        self.book24CheckBox.bind(active=self.onBook24Active)
+        self.book24CheckBox.bind(active=self.on_book24_active)
         # self.bookvoedCheckBox = CheckBox()
         # self.bookvoedCheckBox.bind(active=self.onBookvoedActive)
         self.shopsCheckBoxLayout.add_widget(self.labirintCheckBox)
@@ -108,31 +113,31 @@ class MarketParser(App):
 
         return self.mainLayout
 
-    def onSearch(self, instance, value):
+    def on_search(self, instance, value):
         self.SEARCH_QUERY = value
         print(self.SEARCH_QUERY)
 
-    def onSoreToggle(self, instance):
+    def on_sore_toggle(self, instance):
         self.FILTER_VALUE = 0
         print(self.FILTER_VALUE)
 
-    def onNewToggle(self, instance):
+    def on_new_toggle(self, instance):
         self.FILTER_VALUE = 1
         print(self.FILTER_VALUE)
 
-    def onPriceToggle(self, instance):
+    def on_price_toggle(self, instance):
         self.FILTER_VALUE = 2
         print(self.FILTER_VALUE)
 
-    def onRatingToggle(self, instance):
+    def on_rating_toggle(self, instance):
         self.FILTER_VALUE = 3
         print(self.FILTER_VALUE)
 
-    def onDiscountToggle(self, instance):
+    def on_discount_toggle(self, instance):
         self.FILTER_VALUE = 4
         print(self.FILTER_VALUE)
 
-    def onLabirintActive(self, checkbox, value):
+    def on_labirint_active(self, checkbox, value):
         if value:
             self.MARKETS.add("labirint")
             print('The checkbox labirint is active')
@@ -140,7 +145,7 @@ class MarketParser(App):
             self.MARKETS.discard("labirint")
             print('The checkbox labirint is inactive')
 
-    def onBook24Active(self, checkbox, value):
+    def on_book24_active(self, checkbox, value):
         if value:
             self.MARKETS.add("book24")
             print('The checkbox Book24 is active')
@@ -148,7 +153,7 @@ class MarketParser(App):
             self.MARKETS.discard("book24")
             print('The checkbox Book24 is inactive')
 
-    def onBookvoedActive(self, checkbox, value):
+    def on_bookvoed_active(self, checkbox, value):
         if value:
             self.MARKETS.add("bookvoed")
             print('The checkbox bookvoed is active')
