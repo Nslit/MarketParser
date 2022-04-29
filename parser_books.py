@@ -66,6 +66,3 @@ class Shop:
             "link": self.link,
             "price": self.price
         }
-
-
-
