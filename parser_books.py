@@ -2,6 +2,25 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from urllib.parse import quote
 
+labirint_filters = {"default": "relevance",
+                    "popular": "popularity",
+                    "new": "date",
+                    "price_up": "price",
+                    "price_down": "",
+                    }
+book24_filters = {"default": "",
+                  "popular": "",
+                  "new": "",
+                  "price_up": "",
+                  "price_down": "",
+                  }
+bookvoed_filters = {"default": "",
+                    "popular": "",
+                    "new": "",
+                    "price_up": "",
+                    "price_down": "",
+                    }
+
 
 def labirint_search(product, sorter="relevance"):
     return f"https://www.labirint.ru/search/{quote(product)}/?stype=0&order={sorter}"
@@ -81,3 +100,7 @@ class Shop:
             "link": self.link,
             "price": self.price
         }
+
+
+if __name__ == '__main__':
+    pass

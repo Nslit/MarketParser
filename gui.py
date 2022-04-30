@@ -35,9 +35,9 @@ class MarketParser(App):
         self.search = Button(text='search')
         self.search.bind(on_press=self.start_searching)
 
-        self.filtersLayout = BoxLayout(orientation='vertical')
+        self.filtersLayout = BoxLayout(orientation='vertical', size_hint=(0.6, 1))
         self.scoreToggle = ToggleButton(text='score', group='filters')
-        self.scoreToggle.bind(on_press=self.on_sore_toggle)
+        self.scoreToggle.bind(on_press=self.on_score_toggle)
         self.newToggle = ToggleButton(text='new', group='filters')
         self.newToggle.bind(on_press=self.on_new_toggle)
         self.priceToggle = ToggleButton(text='price', group='filters')
@@ -59,18 +59,18 @@ class MarketParser(App):
         self.labirintCheckBox.bind(active=self.on_labirint_active)
         self.book24CheckBox = CheckBox()
         self.book24CheckBox.bind(active=self.on_book24_active)
-        # self.bookvoedCheckBox = CheckBox()
-        # self.bookvoedCheckBox.bind(active=self.onBookvoedActive)
+        self.bookvoedCheckBox = CheckBox()
+        self.bookvoedCheckBox.bind(active=self.on_bookvoed_active)
         self.shopsCheckBoxLayout.add_widget(self.labirintCheckBox)
         self.shopsCheckBoxLayout.add_widget(self.book24CheckBox)
-        # self.shopsCheckBoxLayout.add_widget(self.bookvoedCheckBox)
+        self.shopsCheckBoxLayout.add_widget(self.bookvoedCheckBox)
         self.shopsLayout.add_widget(self.shopsCheckBoxLayout)
         self.labirintCheckBoxName = Label(text='labirint')
         self.book24CheckBoxName = Label(text='book24')
-        # self.bookvoedCheckBoxName = Label(text='bookvoed')
+        self.bookvoedCheckBoxName = Label(text='bookvoed')
         self.shopsCheckBoxNamesLayout.add_widget(self.labirintCheckBoxName)
         self.shopsCheckBoxNamesLayout.add_widget(self.book24CheckBoxName)
-        # self.shopsCheckBoxNamesLayout.add_widget(self.bookvoedCheckBoxName)
+        self.shopsCheckBoxNamesLayout.add_widget(self.bookvoedCheckBoxName)
         self.shopsLayout.add_widget(self.shopsCheckBoxNamesLayout)
 
         self.menuLayout.add_widget(self.search)
@@ -91,6 +91,7 @@ class MarketParser(App):
         print(self.SEARCH_QUERY)
         self.labirint_books = []
         self.book24_books = []
+        self.bookvoed_books = []
         if "labirint" in self.MARKETS:
             print(labirint_search(self.SEARCH_QUERY, self.FILTER_VALUE))
             self.labirint_books = parser_labirint(self.SEARCH_QUERY)
@@ -117,6 +118,10 @@ class MarketParser(App):
             good = Book(book)
             good.run(self.layout)
 
+        if not self.ALL_BOOKS:
+            info = Label(text="Тут будет информация о том,\nкак пользоваться приложением\nи что-нибудь ещё")
+            self.layout.add_widget(info)
+
         self.bottomLayout.add_widget(self.layout)
         return self.bottomLayout
 
@@ -124,7 +129,7 @@ class MarketParser(App):
         self.SEARCH_QUERY = value
         print(self.SEARCH_QUERY)
 
-    def on_sore_toggle(self, instance):
+    def on_score_toggle(self, instance):
         self.FILTER_VALUE = 0
         print(self.FILTER_VALUE)
 
@@ -155,10 +160,10 @@ class MarketParser(App):
     def on_book24_active(self, checkbox, value):
         if value:
             self.MARKETS.add("book24")
-            print('The checkbox Book24 is active')
+            print('The checkbox book24 is active')
         else:
             self.MARKETS.discard("book24")
-            print('The checkbox Book24 is inactive')
+            print('The checkbox book24 is inactive')
 
     def on_bookvoed_active(self, checkbox, value):
         if value:

@@ -4,7 +4,7 @@ class Bookvoed(Shop):
 
     def parser_title(self):
         try:
-            title = self.card.find("a", class_="ASb ls").text
+            title = self.card.find("a", class_="OTb ls").text
             self.title = str(title)
         except Exception:
             self.title = None
@@ -25,6 +25,7 @@ if __name__ == "__main__":
         class_name = "Ph"
         cards = product_cards(soup, class_name)
         for card in cards:
+            #print(card)
             Bookvoed(card).run()
 
     test("Ремарк")
