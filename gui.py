@@ -1,6 +1,6 @@
 from labirint import parser_labirint
 from book24 import parser_book24
-from parser_books import labirint_search, book24_search, bookvoed_search
+from parser_books import labirint_search, book24_search, bookvoed_search, joining_lists
 
 import webbrowser
 
@@ -89,15 +89,18 @@ class MarketParser(App):
     def start_searching(self, instance):
         print(self.MARKETS)
         print(self.SEARCH_QUERY)
+        self.labirint_books = []
+        self.book24_books = []
         if "labirint" in self.MARKETS:
             print(labirint_search(self.SEARCH_QUERY, self.FILTER_VALUE))
-            self.ALL_BOOKS += parser_labirint(self.SEARCH_QUERY)
+            self.labirint_books = parser_labirint(self.SEARCH_QUERY)
         if "book24" in self.MARKETS:
             print(book24_search(self.SEARCH_QUERY, self.FILTER_VALUE))
-            self.ALL_BOOKS += parser_book24(self.SEARCH_QUERY)
+            self.book24_books = parser_book24(self.SEARCH_QUERY)
         if "bookvoed" in self.MARKETS:
             print(bookvoed_search(self.SEARCH_QUERY, self.FILTER_VALUE))
 
+        self.ALL_BOOKS = joining_lists(self.labirint_books, self.book24_books)
         print(*self.ALL_BOOKS, sep="\n")
 
         self.mainLayout.clear_widgets()

@@ -33,6 +33,21 @@ def product_cards(soup, class_name):
     return quotes
 
 
+def joining_lists(*lists):
+    answer = []
+    max_len = 0
+    for i in lists:
+        if len(i) > max_len:
+            max_len = len(i)
+    for i in range(max_len):
+        for l in lists:
+            try:
+                answer.append(l[i])
+            except:
+                pass
+    return answer
+
+
 class Shop:
     def __init__(self, card):
         self.card = card
@@ -57,7 +72,7 @@ class Shop:
         self.parser_price()
         self.parser_author()
 
-        #self.parser_test()
+        # self.parser_test()
 
         return {
             "shop": str(type(self).__name__),
