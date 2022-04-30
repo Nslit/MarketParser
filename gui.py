@@ -2,6 +2,8 @@ from labirint import parser_labirint
 from book24 import parser_book24
 from parser_books import labirint_search, book24_search, bookvoed_search
 
+import webbrowser
+
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -11,6 +13,10 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
+from kivy.core.window import Window
+
+
+Window.size = (300, 600)
 
 
 class MarketParser(App):
@@ -38,12 +44,12 @@ class MarketParser(App):
     def book_list(self):
         self.layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
         self.layout.bind(minimum_height=self.layout.setter('height'))
-        for book in self.ALL_BOOKS:
-            book_info = f' Магазин:{book["shop"]}\n Название:{book["title"]}\n Автор:{book["author"]}\n Цена:{book["price"]}'
-            self.bookText = Label(text=book_info, size_hint_y=None, height=150, halign="left", valign="middle")
-            self.bookText.bind(size=self.bookText.setter('text_size'))
-            self.layout.add_widget(self.bookText)
         self.bottomLayout = ScrollView(size_hint=(1, None), size=(0, 450))
+        for book in self.ALL_BOOKS:
+
+            good = Book(book)
+            good.run(self.layout)
+
         self.bottomLayout.add_widget(self.layout)
         return self.bottomLayout
 
@@ -53,9 +59,9 @@ class MarketParser(App):
         self.MARKETS = set()
         self.ALL_BOOKS = []
 
-        self.mainLayout = BoxLayout(orientation='vertical')
+        self.mainLayout = BoxLayout(orientation='vertical', padding=(5, 0, 5, 5))
         self.headLayout = BoxLayout(orientation='vertical', size_hint=(1, 0.3), padding=(0, 0, 0, 5))
-        self.menuLayout = BoxLayout(orientation='horizontal', spacing=10,)
+        self.menuLayout = BoxLayout(orientation='horizontal', spacing=10)
 
         self.textInput = TextInput(text='', multiline=False, size_hint=(1, 0.4))
         self.textInput.bind(text=self.on_search)
@@ -160,6 +166,28 @@ class MarketParser(App):
         else:
             self.MARKETS.discard("bookvoed")
             print('The checkbox bookvoed is inactive')
+
+
+class Book:
+
+    def __init__(self, book_info):
+        self.shop = book_info["shop"]
+        self.title = book_info["title"]
+        self.author = book_info["author"]
+        self.link = book_info["link"]
+        self.price = book_info["price"]
+
+    def run(self, layout):
+        self.layout = layout
+        self.book_text = f'Магазин:{self.shop}\nНазвание:{self.title}\nАвтор:{self.author}\nЦена:{self.price}'
+        self.bookLabel = Label(text=self.book_text, size_hint_y=None, height=200, halign="left", valign="middle")
+        self.bookLabel.bind(size=self.bookLabel.setter('text_size'))
+
+        self.btn = Label(text=f"[ref=]Купить[/ref]", markup=True, on_ref_press=lambda instance, link: webbrowser.open(self.link, new=2))
+
+        self.layout.add_widget(self.bookLabel)
+        self.layout.add_widget(self.btn)
+
 
 
 if __name__ == '__main__':
