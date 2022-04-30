@@ -15,43 +15,10 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 
-
 Window.size = (300, 600)
 
 
 class MarketParser(App):
-
-    def start_searching(self, instance):
-        print(self.MARKETS)
-        print(self.SEARCH_QUERY)
-        if "labirint" in self.MARKETS:
-            print(labirint_search(self.SEARCH_QUERY, self.FILTER_VALUE))
-            self.ALL_BOOKS += parser_labirint(self.SEARCH_QUERY)
-        if "book24" in self.MARKETS:
-            print(book24_search(self.SEARCH_QUERY, self.FILTER_VALUE))
-            self.ALL_BOOKS += parser_book24(self.SEARCH_QUERY)
-        if "bookvoed" in self.MARKETS:
-            print(bookvoed_search(self.SEARCH_QUERY, self.FILTER_VALUE))
-
-        print(*self.ALL_BOOKS, sep="\n")
-
-        self.mainLayout.clear_widgets()
-        self.bottomLayout = self.book_list()
-        self.mainLayout.add_widget(self.headLayout)
-        self.mainLayout.add_widget(self.bottomLayout)
-        self.ALL_BOOKS = []
-
-    def book_list(self):
-        self.layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
-        self.layout.bind(minimum_height=self.layout.setter('height'))
-        self.bottomLayout = ScrollView(size_hint=(1, None), size=(0, 450))
-        for book in self.ALL_BOOKS:
-
-            good = Book(book)
-            good.run(self.layout)
-
-        self.bottomLayout.add_widget(self.layout)
-        return self.bottomLayout
 
     def build(self):
         self.FILTER_VALUE = 0
@@ -119,6 +86,37 @@ class MarketParser(App):
 
         return self.mainLayout
 
+    def start_searching(self, instance):
+        print(self.MARKETS)
+        print(self.SEARCH_QUERY)
+        if "labirint" in self.MARKETS:
+            print(labirint_search(self.SEARCH_QUERY, self.FILTER_VALUE))
+            self.ALL_BOOKS += parser_labirint(self.SEARCH_QUERY)
+        if "book24" in self.MARKETS:
+            print(book24_search(self.SEARCH_QUERY, self.FILTER_VALUE))
+            self.ALL_BOOKS += parser_book24(self.SEARCH_QUERY)
+        if "bookvoed" in self.MARKETS:
+            print(bookvoed_search(self.SEARCH_QUERY, self.FILTER_VALUE))
+
+        print(*self.ALL_BOOKS, sep="\n")
+
+        self.mainLayout.clear_widgets()
+        self.bottomLayout = self.book_list()
+        self.mainLayout.add_widget(self.headLayout)
+        self.mainLayout.add_widget(self.bottomLayout)
+        self.ALL_BOOKS = []
+
+    def book_list(self):
+        self.layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
+        self.layout.bind(minimum_height=self.layout.setter('height'))
+        self.bottomLayout = ScrollView(size_hint=(1, None), size=(0, 450))
+        for book in self.ALL_BOOKS:
+            good = Book(book)
+            good.run(self.layout)
+
+        self.bottomLayout.add_widget(self.layout)
+        return self.bottomLayout
+
     def on_search(self, instance, value):
         self.SEARCH_QUERY = value
         print(self.SEARCH_QUERY)
@@ -180,14 +178,15 @@ class Book:
     def run(self, layout):
         self.layout = layout
         self.book_text = f'Магазин:{self.shop}\nНазвание:{self.title}\nАвтор:{self.author}\nЦена:{self.price}'
-        self.bookLabel = Label(text=self.book_text, size_hint_y=None, height=200, halign="left", valign="middle")
+        self.bookLabel = Label(text=self.book_text, size_hint_y=None, \
+                               height=200, halign="left", valign="middle")
         self.bookLabel.bind(size=self.bookLabel.setter('text_size'))
 
-        self.btn = Label(text=f"[ref=]Купить[/ref]", markup=True, on_ref_press=lambda instance, link: webbrowser.open(self.link, new=2))
+        self.btn = Label(text=f"[ref=]Купить[/ref]", markup=True, \
+                         on_ref_press=lambda instance, link: webbrowser.open(self.link, new=2))
 
         self.layout.add_widget(self.bookLabel)
         self.layout.add_widget(self.btn)
-
 
 
 if __name__ == '__main__':
