@@ -2,11 +2,11 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from urllib.parse import quote
 
-labirint_filters = {"default": "relevance",
-                    "popular": "popularity",
-                    "new": "date",
-                    "price_up": "price",
-                    "price_down": "",
+labirint_filters = {"default": "relevance&way=back",
+                    "popular": "popularity&way=forward",
+                    "new": "date&way=back",
+                    "price_up": "price&way=forward",
+                    "price_down": "price&way=back",
                     }
 book24_filters = {"default": "",
                   "popular": "",
@@ -22,7 +22,7 @@ bookvoed_filters = {"default": "",
                     }
 
 
-def labirint_search(product, sorter="relevance"):
+def labirint_search(product, sorter=labirint_filters["default"]):
     return f"https://www.labirint.ru/search/{quote(product)}/?stype=0&order={sorter}"
 
 

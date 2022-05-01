@@ -1,5 +1,6 @@
 from labirint import parser_labirint
 from book24 import parser_book24
+from bookvoed import parser_bookvoed
 from parser_books import labirint_search, book24_search, bookvoed_search, joining_lists
 
 import webbrowser
@@ -21,7 +22,7 @@ Window.size = (300, 600)
 class MarketParser(App):
 
     def build(self):
-        self.FILTER_VALUE = 0
+        self.FILTER_VALUE = "default"
         self.SEARCH_QUERY = ""
         self.MARKETS = set()
         self.ALL_BOOKS = []
@@ -36,21 +37,21 @@ class MarketParser(App):
         self.search.bind(on_press=self.start_searching)
 
         self.filtersLayout = BoxLayout(orientation='vertical', size_hint=(0.6, 1))
-        self.scoreToggle = ToggleButton(text='score', group='filters')
-        self.scoreToggle.bind(on_press=self.on_score_toggle)
+        self.defaultToggle = ToggleButton(text='default', group='filters')
+        self.defaultToggle.bind(on_press=self.on_default_toggle)
+        self.popularToggle = ToggleButton(text='popular', group='filters')
+        self.popularToggle.bind(on_press=self.on_popular_toggle)
         self.newToggle = ToggleButton(text='new', group='filters')
         self.newToggle.bind(on_press=self.on_new_toggle)
-        self.priceToggle = ToggleButton(text='price', group='filters')
-        self.priceToggle.bind(on_press=self.on_price_toggle)
-        self.ratingToggle = ToggleButton(text='rating', group='filters')
-        self.ratingToggle.bind(on_press=self.on_rating_toggle)
-        self.discountToggle = ToggleButton(text='discount', group='filters')
-        self.discountToggle.bind(on_press=self.on_discount_toggle)
-        self.filtersLayout.add_widget(self.scoreToggle)
+        self.price_upToggle = ToggleButton(text='price_up', group='filters')
+        self.price_upToggle.bind(on_press=self.on_price_up_toggle)
+        self.price_downToggle = ToggleButton(text='price_down', group='filters')
+        self.price_downToggle.bind(on_press=self.on_price_down_toggle)
+        self.filtersLayout.add_widget(self.defaultToggle)
+        self.filtersLayout.add_widget(self.popularToggle)
         self.filtersLayout.add_widget(self.newToggle)
-        self.filtersLayout.add_widget(self.priceToggle)
-        self.filtersLayout.add_widget(self.ratingToggle)
-        self.filtersLayout.add_widget(self.discountToggle)
+        self.filtersLayout.add_widget(self.price_upToggle)
+        self.filtersLayout.add_widget(self.price_downToggle)
 
         self.shopsLayout = BoxLayout(orientation='horizontal')
         self.shopsCheckBoxLayout = BoxLayout(orientation='vertical')
@@ -94,14 +95,15 @@ class MarketParser(App):
         self.bookvoed_books = []
         if "labirint" in self.MARKETS:
             print(labirint_search(self.SEARCH_QUERY, self.FILTER_VALUE))
-            self.labirint_books = parser_labirint(self.SEARCH_QUERY)
+            self.labirint_books = parser_labirint(self.SEARCH_QUERY, self.FILTER_VALUE)
         if "book24" in self.MARKETS:
             print(book24_search(self.SEARCH_QUERY, self.FILTER_VALUE))
             self.book24_books = parser_book24(self.SEARCH_QUERY)
         if "bookvoed" in self.MARKETS:
             print(bookvoed_search(self.SEARCH_QUERY, self.FILTER_VALUE))
+            self.bookvoed_books = parser_bookvoed(self.SEARCH_QUERY)
 
-        self.ALL_BOOKS = joining_lists(self.labirint_books, self.book24_books)
+        self.ALL_BOOKS = joining_lists(self.labirint_books, self.book24_books, self.bookvoed_books)
         print(*self.ALL_BOOKS, sep="\n")
 
         self.mainLayout.clear_widgets()
@@ -119,8 +121,11 @@ class MarketParser(App):
             good.run(self.layout)
 
         if not self.ALL_BOOKS:
-            info = Label(text="Тут будет информация о том,\nкак пользоваться приложением\nи что-нибудь ещё")
-            self.layout.add_widget(info)
+            info = "Тут будет информация о том, как пользоваться приложением и что-нибудь ещё"
+            self.infoLabel = Label(text=info, size_hint_y=None, \
+                                   height=200, halign="left", valign="middle")
+            self.infoLabel.bind(size=self.infoLabel.setter('text_size'))
+            self.layout.add_widget(self.infoLabel)
 
         self.bottomLayout.add_widget(self.layout)
         return self.bottomLayout
@@ -129,24 +134,24 @@ class MarketParser(App):
         self.SEARCH_QUERY = value
         print(self.SEARCH_QUERY)
 
-    def on_score_toggle(self, instance):
-        self.FILTER_VALUE = 0
+    def on_default_toggle(self, instance):
+        self.FILTER_VALUE = "default"
+        print(self.FILTER_VALUE)
+
+    def on_popular_toggle(self, instance):
+        self.FILTER_VALUE = "popular"
         print(self.FILTER_VALUE)
 
     def on_new_toggle(self, instance):
-        self.FILTER_VALUE = 1
+        self.FILTER_VALUE = "new"
         print(self.FILTER_VALUE)
 
-    def on_price_toggle(self, instance):
-        self.FILTER_VALUE = 2
+    def on_price_up_toggle(self, instance):
+        self.FILTER_VALUE = "price_up"
         print(self.FILTER_VALUE)
 
-    def on_rating_toggle(self, instance):
-        self.FILTER_VALUE = 3
-        print(self.FILTER_VALUE)
-
-    def on_discount_toggle(self, instance):
-        self.FILTER_VALUE = 4
+    def on_price_down_toggle(self, instance):
+        self.FILTER_VALUE = "price_down"
         print(self.FILTER_VALUE)
 
     def on_labirint_active(self, checkbox, value):

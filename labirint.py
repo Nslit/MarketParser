@@ -1,5 +1,5 @@
 from parser_books import Shop
-from parser_books import labirint_search, soup_creation, product_cards
+from parser_books import labirint_search, soup_creation, product_cards, labirint_filters
 
 
 class Labirint(Shop):
@@ -36,9 +36,9 @@ class Labirint(Shop):
             print("Error in parser_author")
 
 
-def parser_labirint(product):
+def parser_labirint(product, filter):
     books = []
-    url = labirint_search(product)
+    url = labirint_search(product, labirint_filters[filter])
     soup = soup_creation(url)
     class_name = "card-column card-column_gutter col-xs-6 col-sm-3 col-md-1-5 col-xl-2"
     cards = product_cards(soup, class_name)
