@@ -1,5 +1,5 @@
 from parser_books import Shop
-from parser_books import book24_search, soup_creation_agent, product_cards
+from parser_books import book24_search, soup_creation_agent, product_cards, book24_filters
 
 class Book24(Shop):
 
@@ -36,9 +36,9 @@ class Book24(Shop):
             print("Error in parser_author")
 
 
-def parser_book24(product):
+def parser_book24(product, filter):
     books = []
-    url = book24_search(product)
+    url = book24_search(product, book24_filters[filter])
     soup = soup_creation_agent(url)
     class_name = "product-list__item"
     cards = product_cards(soup, class_name)

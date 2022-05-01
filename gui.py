@@ -98,10 +98,10 @@ class MarketParser(App):
             self.labirint_books = parser_labirint(self.SEARCH_QUERY, self.FILTER_VALUE)
         if "book24" in self.MARKETS:
             print(book24_search(self.SEARCH_QUERY, self.FILTER_VALUE))
-            self.book24_books = parser_book24(self.SEARCH_QUERY)
+            self.book24_books = parser_book24(self.SEARCH_QUERY, self.FILTER_VALUE)
         if "bookvoed" in self.MARKETS:
             print(bookvoed_search(self.SEARCH_QUERY, self.FILTER_VALUE))
-            self.bookvoed_books = parser_bookvoed(self.SEARCH_QUERY)
+            self.bookvoed_books = parser_bookvoed(self.SEARCH_QUERY, self.FILTER_VALUE)
 
         self.ALL_BOOKS = joining_lists(self.labirint_books, self.book24_books, self.bookvoed_books)
         print(*self.ALL_BOOKS, sep="\n")

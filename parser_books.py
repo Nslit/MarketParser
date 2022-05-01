@@ -8,17 +8,17 @@ labirint_filters = {"default": "relevance&way=back",
                     "price_up": "price&way=forward",
                     "price_down": "price&way=back",
                     }
-book24_filters = {"default": "",
-                  "popular": "",
-                  "new": "",
-                  "price_up": "",
-                  "price_down": "",
+book24_filters = {"default": "desc&sort=date",
+                  "popular": "desc&sort=sort",
+                  "new": "desc&sort=date",
+                  "price_up": "asc&sort=price_discount",
+                  "price_down": "desc&sort=price_discount",
                   }
-bookvoed_filters = {"default": "",
-                    "popular": "",
-                    "new": "",
-                    "price_up": "",
-                    "price_down": "",
+bookvoed_filters = {"default": "relevancy&desc=1",
+                    "popular": "sales&desc=1",
+                    "new": "time&desc=1",
+                    "price_up": "price&desc=0",
+                    "price_down": "price&desc=1",
                     }
 
 
@@ -26,12 +26,12 @@ def labirint_search(product, sorter=labirint_filters["default"]):
     return f"https://www.labirint.ru/search/{quote(product)}/?stype=0&order={sorter}"
 
 
-def book24_search(product, sorter="sort"):
-    return f"https://book24.ru/search/?q={quote(product)}&by=desc&sort={sorter}"
+def book24_search(product, sorter=book24_filters["default"]):
+    return f"https://book24.ru/search/?q={quote(product)}&by={sorter}"
 
 
-def bookvoed_search(product, sorter="relevancy"):
-    return f"https://www.bookvoed.ru/books?q={quote(product)}&order={sorter}&desc=1&ishop=true"
+def bookvoed_search(product, sorter=bookvoed_filters["default"]):
+    return f"https://www.bookvoed.ru/books?q={quote(product)}&order={sorter}&ishop=true"
 
 
 def soup_creation(url):
