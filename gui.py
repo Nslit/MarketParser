@@ -16,7 +16,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 
-Window.size = (300, 600)
+Window.size = (400, 600)
 
 
 class MarketParser(App):
@@ -33,19 +33,19 @@ class MarketParser(App):
 
         self.textInput = TextInput(text='', multiline=False, size_hint=(1, 0.4))
         self.textInput.bind(text=self.on_search)
-        self.search = Button(text='search')
+        self.search = Button(text='Поиск')
         self.search.bind(on_press=self.start_searching)
 
-        self.filtersLayout = BoxLayout(orientation='vertical', size_hint=(0.6, 1))
-        self.defaultToggle = ToggleButton(text='default', group='filters')
+        self.filtersLayout = BoxLayout(orientation='vertical', size_hint=(0.7, 1))
+        self.defaultToggle = ToggleButton(text='Стандартные', group='filters')
         self.defaultToggle.bind(on_press=self.on_default_toggle)
-        self.popularToggle = ToggleButton(text='popular', group='filters')
+        self.popularToggle = ToggleButton(text='Популярные', group='filters')
         self.popularToggle.bind(on_press=self.on_popular_toggle)
-        self.newToggle = ToggleButton(text='new', group='filters')
+        self.newToggle = ToggleButton(text='Новые', group='filters')
         self.newToggle.bind(on_press=self.on_new_toggle)
-        self.price_upToggle = ToggleButton(text='price_up', group='filters')
+        self.price_upToggle = ToggleButton(text='Дешевые', group='filters')
         self.price_upToggle.bind(on_press=self.on_price_up_toggle)
-        self.price_downToggle = ToggleButton(text='price_down', group='filters')
+        self.price_downToggle = ToggleButton(text='Дорогие', group='filters')
         self.price_downToggle.bind(on_press=self.on_price_down_toggle)
         self.filtersLayout.add_widget(self.defaultToggle)
         self.filtersLayout.add_widget(self.popularToggle)
@@ -116,13 +116,37 @@ class MarketParser(App):
         self.layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
         self.layout.bind(minimum_height=self.layout.setter('height'))
         self.bottomLayout = ScrollView(size_hint=(1, None), size=(0, 450))
+
+        if  self.ALL_BOOKS:
+            kniga = ''
+            count = len(self.ALL_BOOKS)
+            if count % 10 in (0, 5, 6, 7, 8, 9):
+                kniga = "книг"
+            elif count % 10 == 1:
+                kniga = "книга"
+            elif count % 10 in (2, 3, 4):
+                kniga = "книги"
+
+            self.countBooks = Label(text=f"По вашему запросу нашлось {count} {kniga}!", size_hint_y=None, \
+                                       height=20, halign="left", valign="middle")
+            self.countBooks.bind(size=self.countBooks.setter('text_size'))
+            self.layout.add_widget(self.countBooks)
+
         for book in self.ALL_BOOKS:
             good = Book(book)
             good.run(self.layout)
 
-        if not self.ALL_BOOKS:
-            info = "Тут будет информация о том, как пользоваться приложением и что-нибудь ещё"
-            self.infoLabel = Label(text=info, size_hint_y=None, \
+        if not self.ALL_BOOKS and not self.SEARCH_QUERY:
+            self.info = """Это приложение для поиска книг на нескольких платформах одновременно.
+Для того, чтобы начать, напишите свой запрос в строку поиска, галочками выберите нужные магазины, если нужно отсортировать результаты поиска, нажмите на нужный фильтр и нажмите на кнопку 'Поиск'."""
+            self.infoLabel = Label(text=self.info, size_hint_y=None, \
+                                   height=200, halign="left", valign="middle")
+            self.infoLabel.bind(size=self.infoLabel.setter('text_size'))
+            self.layout.add_widget(self.infoLabel)
+
+        elif not self.ALL_BOOKS:
+            self.info = "К сожалению ничего не нашлось :("
+            self.infoLabel = Label(text=self.info, size_hint_y=None, \
                                    height=200, halign="left", valign="middle")
             self.infoLabel.bind(size=self.infoLabel.setter('text_size'))
             self.layout.add_widget(self.infoLabel)

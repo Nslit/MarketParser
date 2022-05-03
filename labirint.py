@@ -41,6 +41,10 @@ def parser_labirint(product, filter):
     url = labirint_search(product, labirint_filters[filter])
     soup = soup_creation(url)
     class_name = "card-column card-column_gutter col-xs-6 col-sm-3 col-md-1-5 col-xl-2"
+
+    for i in soup.find_all("a", class_="pagination-number__text"):
+        print(i.text)
+
     cards = product_cards(soup, class_name)
     for card in cards:
         books.append(Labirint(card).pars())
@@ -49,4 +53,4 @@ def parser_labirint(product, filter):
 
 
 if __name__ == "__main__":
-    parser_labirint("Ремарк")
+    parser_labirint("Пушкин", "default")
